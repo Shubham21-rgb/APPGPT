@@ -1,1 +1,0 @@
-// JavaScript functionality for the Hospital Management Services can be added here.
