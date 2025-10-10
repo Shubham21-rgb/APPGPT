@@ -3,7 +3,7 @@ const statusDisplay = document.getElementById('status');
 const restartBtn = document.getElementById('restartBtn');
 
 let board = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = 'X';
+let currentPlayer = '9';
 let isGameActive = true;
 
 const winningConditions = [
@@ -17,7 +17,7 @@ function createBoard() {
         const cellElement = document.createElement('div');
         cellElement.classList.add('cell');
         cellElement.setAttribute('data-cell-index', index);
-        cellElement.innerText = cell;
+        cellElement.innerHTML = cell;
         cellElement.addEventListener('click', handleCellClick);
         gameBoard.appendChild(cellElement);
     });
@@ -25,55 +25,53 @@ function createBoard() {
 
 function handleCellClick(event) {
     const clickedCell = event.target;
-    const clickedCellIndex = clickedCell.getAttribute('data-cell-index');
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
     if (board[clickedCellIndex] !== '' || !isGameActive) {
         return;
     }
 
     board[clickedCellIndex] = currentPlayer;
-    clickedCell.innerText = currentPlayer;
+    clickedCell.innerHTML = currentPlayer;
     checkResult();
+    currentPlayer = currentPlayer === '9' ? '8' : '9';
 }
 
 function checkResult() {
     let roundWon = false;
-
     for (let i = 0; i < winningConditions.length; i++) {
-        const [a, b, c] = winningConditions[i];
-        if (board[a] === '' || board[b] === '' || board[c] === '') {
+        const winCondition = winningConditions[i];
+        const a = board[winCondition[0]];
+        const b = board[winCondition[1]];
+        const c = board[winCondition[2]];
+        if (a === '' || b === '' || c === '') {
             continue;
         }
-        if (board[a] === board[b] && board[a] === board[c]) {
+        if (a === b && b === c) {
             roundWon = true;
             break;
         }
     }
-
     if (roundWon) {
-        statusDisplay.innerText = `Player ${currentPlayer} has won!`;
+        statusDisplay.innerHTML = `Player ${currentPlayer} has won!`;
         isGameActive = false;
         return;
     }
-
     if (!board.includes('')) {
-        statusDisplay.innerText = 'Game ended in a draw!';
+        statusDisplay.innerHTML = 'Game ended in a draw!';
         isGameActive = false;
-        return;
     }
-
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 }
-
-restartBtn.addEventListener('click', restartGame);
 
 function restartGame() {
     isGameActive = true;
-    currentPlayer = 'X';
+    currentPlayer = '9';
     board = ['', '', '', '', '', '', '', '', ''];
-    statusDisplay.innerText = '';
-    gameBoard.innerHTML = '';
-    createBoard();
+    statusDisplay.innerHTML = '';
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.innerHTML = '';
+    });
 }
 
+restartBtn.addEventListener('click', restartGame);
 createBoard();
