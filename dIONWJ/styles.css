@@ -1,44 +1,13 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
-    text-align: center;
-}
-
-.board {
-    display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
-    gap: 1px;
-    margin: 20px auto;
-}
-
-.board div {
+.cell {
     width: 50px;
     height: 50px;
-    background-color: white;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 1px solid #000;
+    display: inline-block;
+    text-align: center;
+    line-height: 50px;
 }
 
-.controls {
-    margin: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-}
-
-.players {
-    margin-top: 20px;
+.active {
+    background-color: yellow;
+    transition: background-color 0.5s;
 }
