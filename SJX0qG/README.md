@@ -9,6 +9,9 @@ This project is a Hospital Management System developed by Tushar Chatterjee, a s
 - Medical Records Management
 - Billing and Payments
 
+## Internship Experience
+Completed an internship at NIT Durgapur, where I developed a Quarter Management System.
+
 ## Setup
 1. Clone the repository:
    ```bash
@@ -18,10 +21,4 @@ This project is a Hospital Management System developed by Tushar Chatterjee, a s
    ```bash
    cd hospital-management-services
    ```
-3. Open `index.html` in your web browser to view the project.
-
-## Usage
-- Navigate through the sections to understand the functionalities of the Hospital Management System.
-
-## License
-This project is licensed under the MIT License.
+3. Open `index.html` i
