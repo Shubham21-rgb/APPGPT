@@ -12,6 +12,7 @@ function createBoard() {
     for (let i = 100; i >= 1; i--) {
         const cell = document.createElement('div');
         cell.innerText = i;
+        cell.classList.add('cell');
         board.appendChild(cell);
     }
 }
@@ -21,18 +22,29 @@ function rollDice() {
 }
 
 function updatePosition(roll) {
-    if (currentPlayer === 1) {
-        player1Position += roll;
-        if (player1Position > 100) player1Position = 100;
-        player1PositionText.innerText = player1Position;
-        currentPlayer = 2;
-    } else {
-        player2Position += roll;
-        if (player2Position > 100) player2Position = 100;
-        player2PositionText.innerText = player2Position;
-        currentPlayer = 1;
-    }
-    checkWin();
+    const currentPlayerPosition = currentPlayer === 1 ? player1Position : player2Position;
+    const newPosition = currentPlayerPosition + roll;
+    if (newPosition > 100) return;
+
+    const currentCell = board.children[100 - currentPlayerPosition];
+    const newCell = board.children[100 - newPosition];
+
+    // Move the player in UI
+    currentCell.classList.remove('active');
+    newCell.classList.add('active');
+
+    setTimeout(() => {
+        if (currentPlayer === 1) {
+            player1Position = newPosition;
+            player1PositionText.innerText = player1Position;
+            currentPlayer = 2;
+        } else {
+            player2Position = newPosition;
+            player2PositionText.innerText = player2Position;
+            currentPlayer = 1;
+        }
+        checkWin();
+    }, 1000);
 }
 
 function checkWin() {
@@ -50,6 +62,10 @@ function resetGame() {
     player2Position = 0;
     player1PositionText.innerText = player1Position;
     player2PositionText.innerText = player2Position;
+    const cells = board.getElementsByClassName('cell');
+    for (let cell of cells) {
+        cell.classList.remove('active');
+    }
 }
 
 rollButton.addEventListener('click', () => {
